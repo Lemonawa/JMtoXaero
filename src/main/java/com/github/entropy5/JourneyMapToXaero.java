@@ -163,6 +163,7 @@ public class JourneyMapToXaero {
                     continue;
                 }
                 Arrays.stream(Objects.requireNonNull(folder.listFiles()))
+                        .filter(file -> file.isFile() && file.getName().toLowerCase().endsWith(".png"))
                         .forEach(file -> {
                             String layer = file.getParentFile().getName();  // 0, 1, 2, day, night
                             String region = file.getName();  // 1,1.png
@@ -204,7 +205,7 @@ public class JourneyMapToXaero {
         // OverWorld and End (normal conversion, caves are ignored)
         folderIn = folderIn.toPath().resolve("day").toFile();
         Arrays.stream(Objects.requireNonNull(folderIn.listFiles())).parallel()
-                .filter(File::isFile)
+                .filter(file -> file.isFile() && file.getName().toLowerCase().endsWith(".png"))
                 .forEach(file -> {
                     String[] parts = file.getName().split("[.,]");
                     BufferedImage image;
