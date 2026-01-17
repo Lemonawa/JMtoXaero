@@ -156,6 +156,12 @@ public class JourneyMapToXaero {
                 if (!folder.isDirectory()) {
                     continue;  // skip files like DS_STORE
                 }
+                // Skip non-map folders (cache, biome, topo)
+                String folderName = folder.getName();
+                if (folderName.equals("cache") || folderName.equals("biome") || folderName.equals("topo")) {
+                    System.out.println("Skipping " + folderName + " folder");
+                    continue;
+                }
                 Arrays.stream(Objects.requireNonNull(folder.listFiles()))
                         .forEach(file -> {
                             String layer = file.getParentFile().getName();  // 0, 1, 2, day, night
